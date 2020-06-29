@@ -63,11 +63,12 @@ emerge_reasses_dat$reasses_due
 emerge_reasses_dat[is.na(emerge_reasses_dat)] = ymd("2018-12-01")
 #Create an indicator for quarter one for baseline and only keep those people
 emerge_reasses_dat$q1_due = ifelse(emerge_reasses_dat$reasses_due >= "2019-10-01" & emerge_reasses_dat$reasses_due <= "2019-12-31" & emerge_reasses_dat$InterviewType ==1, 1, 0)
+
 q1_due_dat = subset(emerge_reasses_dat, q1_due == 1)
 # Then grab everyone with a 6-month reassessment to see if we can match them
-month6_q1 = subset(emerge_reasses_dat, InterviewType == 2)
+month6 = subset(emerge_reasses_dat, InterviewType == 2)
 ## match those with baseline reassessment with those with three month reassesments 
-q1_complete = merge(q1_due_dat, month6_q1, by = "ClientID")
+q1_complete = merge(q1_due_dat, month6, by = "ClientID")
 q1_complete
 
 results_q1 = data.frame(q1_due = dim(q1_due_dat)[1], q1_complete = dim(q1_complete)[1])
