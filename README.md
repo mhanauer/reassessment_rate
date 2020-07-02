@@ -196,4 +196,30 @@ q3_complete
 results_q3 = data.frame(q3_due = dim(q3_due_dat)[1], q3_complete = dim(q3_complete)[1])
 results_q3
 ```
+Statistical test for client clincian sub p = (p1 * n1 + p2 * n2) / (n1 + n2) SE = sqrt{ p * ( 1 - p ) * [ (1/n1) + (1/n2) ] z = (p1 - p2) / SE https://www.cyclismo.org/tutorial/R/pValues.html
+Q1 = p1
+Q3 = p2
+```{r}
+### Q1 
+prop_test_n = function(p1, p2, n1, n2){
+p1 = .36
+p2 = .49
+p_diff = p1-p2
+n1 = 228
+n2 = 411
+p = (p1 * n1 + p2 * n2) / (n1 + n2)
+se = sqrt(p * ( 1 - p ) * ((1/n1) + (1/n2))) 
+z = (p1 - p2) / se
+p_reasses = round(2*pnorm(-abs(z)),4)
+p_reasses
+
+ci_upper = p_diff+1.96*se
+ci_lower = p_diff-1.96*se
+results = data.frame(p_reasses, ci_lower, ci_upper)
+results
+}
+prop_test_n(p1 = .36, p2 = .49, n1 = 228, n2 = 411)
+
+```
+
 
