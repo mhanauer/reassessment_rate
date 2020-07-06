@@ -196,6 +196,151 @@ q3_complete
 results_q3 = data.frame(q3_due = dim(q3_due_dat)[1], q3_complete = dim(q3_complete)[1])
 results_q3
 ```
+CMAT q1
+```{r}
+setwd("T:/CRI_Research/telehealth_evaluation/data_codebooks/Reassessment_data")
+cmat_reasses_data = read.csv("CMAT download 7.2.20.csv", header = TRUE)
+cmat_reasses_dat = cmat_reasses_data
+#Only keep baseline and 6-month
+cmat_reasses_dat
+cmat_reasses_dat = subset(cmat_reasses_dat, InterviewType == 1 | InterviewType ==2)
+# Get data just for this quarter so get due date
+cmat_reasses_dat = cmat_reasses_dat[c("ClientID", "InterviewType", "InterviewDate")]
+cmat_reasses_dat
+cmat_reasses_dat$InterviewDate = mdy(cmat_reasses_dat$InterviewDate)
+
+
+cmat_reasses_dat$reasses_due = cmat_reasses_dat$InterviewDate + months(6)
+cmat_reasses_dat
+
+##### Get rid of missing data, because those are people who do no thave a reassessment.  People without an intake date for 6-month means we missed them.  Since we are matching 6-month reassessment IDs with those who needed to complete a reassessment we need to delete those without 6-month reassessments
+cmat_reasses_dat = na.omit(cmat_reasses_dat)
+#1005, 2085
+
+
+#Create an indicator for quarter one for baseline and only keep those people
+cmat_reasses_dat$q1_due = ifelse(cmat_reasses_dat$reasses_due >= "2019-10-01" & cmat_reasses_dat$reasses_due <= "2019-12-31" & cmat_reasses_dat$InterviewType ==1, 1, 0)
+cmat_reasses_dat
+q1_due_dat = subset(cmat_reasses_dat, q1_due == 1)
+# Then grab everyone with a 6-month reassessment to see if we can match them
+month6 = subset(cmat_reasses_dat, InterviewType == 2)
+## match those with baseline reassessment with those with three month reassesments 
+q1_complete = merge(q1_due_dat, month6, by = "ClientID")
+q1_complete
+
+results_q1 = data.frame(q1_due = dim(q1_due_dat)[1], q1_complete = dim(q1_complete)[1])
+results_q1
+```
+
+CMAT q3
+```{r}
+setwd("T:/CRI_Research/telehealth_evaluation/data_codebooks/Reassessment_data")
+cmat_reasses_data = read.csv("CMAT download 7.2.20.csv", header = TRUE)
+cmat_reasses_dat = cmat_reasses_data
+#Only keep baseline and 6-month
+cmat_reasses_dat
+cmat_reasses_dat = subset(cmat_reasses_dat, InterviewType == 1 | InterviewType ==2)
+# Get data just for this quarter so get due date
+cmat_reasses_dat = cmat_reasses_dat[c("ClientID", "InterviewType", "InterviewDate")]
+cmat_reasses_dat
+cmat_reasses_dat$InterviewDate = mdy(cmat_reasses_dat$InterviewDate)
+#2019-08-30, 2020-03-31	row 140
+
+
+cmat_reasses_dat$reasses_due = cmat_reasses_dat$InterviewDate + months(6)
+cmat_reasses_dat
+##### Get rid of missing data, because those are people who do no thave a reassessment.  People without an intake date for 6-month means we missed them.  Since we are matching 6-month reassessment IDs with those who needed to complete a reassessment we need to delete those without 6-month reassessments
+cmat_reasses_dat = na.omit(cmat_reasses_dat)
+
+
+
+#Create an indicator for quarter one for baseline and only keep those people
+cmat_reasses_dat$q3_due = ifelse(cmat_reasses_dat$reasses_due >= "2020-04-01" & cmat_reasses_dat$reasses_due <= "2020-06-30" & cmat_reasses_dat$InterviewType ==1, 1, 0)
+cmat_reasses_dat
+q3_due_dat = subset(cmat_reasses_dat, q3_due == 1)
+# Then grab everyone with a 6-month reassessment to see if we can match them
+month6 = subset(cmat_reasses_dat, InterviewType == 2)
+## match those with baseline reassessment with those with three month reassesments 
+q3_complete = merge(q3_due_dat, month6, by = "ClientID")
+q3_complete
+
+results_q3 = data.frame(q3_due = dim(q3_due_dat)[1], q3_complete = dim(q3_complete)[1])
+results_q3
+```
+ATDC q1
+```{r}
+setwd("T:/CRI_Research/telehealth_evaluation/data_codebooks/Reassessment_data")
+atdc_reasses_data = read.csv("CETS_6-30-20.csv", header = TRUE)
+atdc_reasses_dat = atdc_reasses_data
+#Only keep baseline and 6-month
+atdc_reasses_dat
+atdc_reasses_dat = subset(atdc_reasses_dat, InterviewType == 1 | InterviewType ==2)
+# Get data just for this quarter so get due date
+atdc_reasses_dat = atdc_reasses_dat[c("ClientID", "InterviewType", "InterviewDate")]
+atdc_reasses_dat
+atdc_reasses_dat$InterviewDate = mdy(atdc_reasses_dat$InterviewDate)
+
+
+atdc_reasses_dat$reasses_due = atdc_reasses_dat$InterviewDate + months(6)
+atdc_reasses_dat
+
+##### Get rid of missing data, because those are people who do no thave a reassessment.  People without an intake date for 6-month means we missed them.  Since we are matching 6-month reassessment IDs with those who needed to complete a reassessment we need to delete those without 6-month reassessments
+atdc_reasses_dat = na.omit(atdc_reasses_dat)
+#1005, 2085
+
+
+#Create an indicator for quarter one for baseline and only keep those people
+atdc_reasses_dat$q1_due = ifelse(atdc_reasses_dat$reasses_due >= "2019-10-01" & atdc_reasses_dat$reasses_due <= "2019-12-31" & atdc_reasses_dat$InterviewType ==1, 1, 0)
+atdc_reasses_dat
+q1_due_dat = subset(atdc_reasses_dat, q1_due == 1)
+# Then grab everyone with a 6-month reassessment to see if we can match them
+month6 = subset(atdc_reasses_dat, InterviewType == 2)
+## match those with baseline reassessment with those with three month reassesments 
+q1_complete = merge(q1_due_dat, month6, by = "ClientID")
+q1_complete
+
+results_q1 = data.frame(q1_due = dim(q1_due_dat)[1], q1_complete = dim(q1_complete)[1])
+results_q1
+```
+
+ATDC q3
+```{r}
+setwd("T:/CRI_Research/telehealth_evaluation/data_codebooks/Reassessment_data")
+atdc_reasses_data = read.csv("CMAT download 7.2.20.csv", header = TRUE)
+atdc_reasses_dat = atdc_reasses_data
+#Only keep baseline and 6-month
+atdc_reasses_dat
+atdc_reasses_dat = subset(atdc_reasses_dat, InterviewType == 1 | InterviewType ==2)
+# Get data just for this quarter so get due date
+atdc_reasses_dat = atdc_reasses_dat[c("ClientID", "InterviewType", "InterviewDate")]
+atdc_reasses_dat
+atdc_reasses_dat$InterviewDate = mdy(atdc_reasses_dat$InterviewDate)
+#2019-08-30, 2020-03-31	row 140
+
+
+atdc_reasses_dat$reasses_due = atdc_reasses_dat$InterviewDate + months(6)
+atdc_reasses_dat
+##### Get rid of missing data, because those are people who do no thave a reassessment.  People without an intake date for 6-month means we missed them.  Since we are matching 6-month reassessment IDs with those who needed to complete a reassessment we need to delete those without 6-month reassessments
+atdc_reasses_dat = na.omit(atdc_reasses_dat)
+
+
+
+#Create an indicator for quarter one for baseline and only keep those people
+atdc_reasses_dat$q3_due = ifelse(atdc_reasses_dat$reasses_due >= "2020-04-01" & atdc_reasses_dat$reasses_due <= "2020-06-30" & atdc_reasses_dat$InterviewType ==1, 1, 0)
+atdc_reasses_dat
+q3_due_dat = subset(atdc_reasses_dat, q3_due == 1)
+# Then grab everyone with a 6-month reassessment to see if we can match them
+month6 = subset(atdc_reasses_dat, InterviewType == 2)
+## match those with baseline reassessment with those with three month reassesments 
+q3_complete = merge(q3_due_dat, month6, by = "ClientID")
+q3_complete
+
+results_q3 = data.frame(q3_due = dim(q3_due_dat)[1], q3_complete = dim(q3_complete)[1])
+results_q3
+```
+
+
+
 Statistical test for client clincian sub p = (p1 * n1 + p2 * n2) / (n1 + n2) SE = sqrt{ p * ( 1 - p ) * [ (1/n1) + (1/n2) ] z = (p1 - p2) / SE https://www.cyclismo.org/tutorial/R/pValues.html
 Q1 = p1
 Q3 = p2
