@@ -347,11 +347,11 @@ Q3 = p2
 ```{r}
 ### Q1 
 prop_test_n = function(p1, p2, n1, n2){
-p1 = .36
-p2 = .49
+p1 = .54
+p2 = .46
 p_diff = p1-p2
-n1 = 228
-n2 = 411
+n1 = 578
+n2 = 638
 p = (p1 * n1 + p2 * n2) / (n1 + n2)
 se = sqrt(p * ( 1 - p ) * ((1/n1) + (1/n2))) 
 z = (p1 - p2) / se
@@ -363,7 +363,7 @@ ci_lower = p_diff-1.96*se
 results = data.frame(p_reasses, ci_lower, ci_upper)
 results
 }
-prop_test_n(p1 = .36, p2 = .49, n1 = 228, n2 = 411)
+prop_test_n(p1 = .54, p2 = .46, n1 = 578, n2 = 638)
 
 ```
 
